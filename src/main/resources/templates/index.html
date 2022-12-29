@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <meta charset="ISO-8859-1">
+  <!-- <link rel="stylesheet" href="../static/css/style.css"> -->
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Coffee Storage Application</title>
+</head>
+
+<body>
+  <div class="header">
+    <h1>Coffee Storage</h1>
+  </div>
+  <div class="search">
+    <form method="get" action="" th:action="@{/searchCoffee}" th:object="${search}">
+      <input class="textInput" placeholder="Search your coffee!" type="text" name="name" th:field="*{name}" /><br>
+      <input class="customBtn" type="submit" value="Go!" />
+    </form>
+  </div>
+
+  <div class="displayAllBtn">
+    <form method="get" th:action="@{/viewAll}">
+      <input class="customBtn" type="submit" value="Display all" />
+    </form>
+  </div>
+
+  <div class="coffeeTable">
+    <h2>Coffee List</h2>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Origin</th>
+        <th>Coffee Type</th>
+        <th>Roast</th>
+        <th>Quantity</th>
+        <th colspan="2">Options</th>
+      </tr>
+      <tr th:each="c : ${coffeeList}">
+        <td th:text="${c.name}"></td>
+        <td th:text="${c.origin}"></td>
+        <td th:text="${c.coffeeType}"></td>
+        <td th:text="${c.roast}"></td>
+        <td th:text="${c.quantity}"></td>
+        <td><a th:href="@{/editCoffee/}+${c.id}">Edit</a></td>
+        <td><a th:href="@{/deleteCoffee/}+${c.id}">Delete</a></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="coffeeForm">
+    <h2>Register a new coffee</h2>
+    <form method="post" action="" th:action="@{/insertCoffee}" th:object="${coffee}">
+      <input type="hidden" name="id" th:field="*{id}" />
+      
+      <p>Name: </p> <input class="textInput" type="text" name="name" th:field="*{name}" /><br>
+      
+      <p>Origin: </p> <input class="textInput" type="text" name="origin" th:field="*{origin}" /><br>
+      <p>Coffee Type:</p> <input class="textInput" type="text" name="coffeeType" th:field="*{coffeeType}" /><br>
+      <p>Roast:</p> <input class="textInput" type="text" name="roast" th:field="*{roast}" /><br>
+      <p>Quantity:</p> <input class="textInput" type="number" name="quantity" th:field="*{quantity}" /><br>
+      <input class="customBtn" type="submit" value="Add coffee!" />
+    </form>
+  </div>
+</body>
+
+</html>
